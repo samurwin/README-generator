@@ -9,7 +9,7 @@ const questions = () => {
         {
             type: 'input',
             name: 'title',
-            message: 'What is the title of your project?',
+            message: 'What is the title of your project? (Required)',
             validate: titleInput => {
                 if (titleInput) {
                     return true;
@@ -22,7 +22,7 @@ const questions = () => {
         {
             type: 'input',
             name: 'description',
-            message: 'Provide a detailed description of your application:',
+            message: 'Provide a detailed description of your application (Required)',
             validate: descriptionInput => {
                 if(descriptionInput) {
                     return true;
@@ -35,7 +35,15 @@ const questions = () => {
         {
             type: 'input',
             name: 'link',
-            message: 'Provide a link to the deployed application:'
+            message: 'Provide a link to the deployed application (Required)',
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                } else {
+                    console.log('Please provide a link to the deployed application');
+                    return false;
+                }
+            }
         },
         {
             type: 'list',
@@ -46,18 +54,36 @@ const questions = () => {
         },
         {
             type: 'input',
-            name: 'screenshot',
-            message: 'Provide the relative path link to a screenshot of your application:'
+            name: 'usage',
+            message: 'Provide a description of how to use your app (Required)',
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                } else {
+                    console.log('Please enter a description of how to use your app');
+                    return false;
+                }
+            }
         },
         {
             type: 'input',
-            name: 'usage',
-            message: 'Provide a description of how to use your app:'
+            name: 'installation',
+            message: 'Provide a step-by-step description of how to get the development environment running. Seperate steps with an "," (Recommended)'
+        },
+        {
+            type: 'input',
+            name: 'contributing',
+            message: 'If you would like other developers to be able to contribute to this application, please provide guidelines on how to do so (Recommended)'
+        },
+        {
+            type: 'input',
+            name: 'tests',
+            message: 'Provide examples of how to run tests on your application (Recommended)'
         },
         {
             type: 'input',
             name: 'github',
-            message: 'Provide the link to your GitHub:',
+            message: 'Provide the link to your GitHub (Required)',
             validate: nameInput => {
                 if(nameInput) {
                     return true;
@@ -70,7 +96,7 @@ const questions = () => {
         {
             type: 'input',
             name: 'email',
-            message: 'Provide an email where you can be contacted:',
+            message: 'Provide an email where you can be contacted (Required)',
             validate: nameInput => {
                 if(nameInput) {
                     return true;
@@ -82,14 +108,14 @@ const questions = () => {
         },
         {
             type: 'confirm',
-            name: 'confirmContributors',
-            message: 'Are there other contributors for this project?',
+            name: 'confirmCredits',
+            message: 'Are there other contributors for this project you would like to credit?',
             default: false
         }
     ])
 };
 
-const contributors = readmeData => {
+const addCredits = readmeData => {
     if (!readmeData.credits) {
         readmeData.credits = [];
     }
@@ -101,32 +127,21 @@ const contributors = readmeData => {
         },
         {
             type: 'confirm',
-            name: 'confirmAddContributers',
+            name: 'confirmAddCredit',
             message: 'Would you like to credit another contributor?',
             default: false
         }
     ])
     .then (credit => {
         readmeData.credits.push(credit);
-        if (credit.confirmAddContributers){
-            contributors(readmeData);
+        if (credit.confirmAddCredit){
+            addCredits(readmeData);
         } else {
-            return readmeData;
+            console.log(readmeData);
         }
     })
 };
 
-const installation = readmeData => {
-
-};
-
-const tests = readmeData => {
-
-}
-
-const contribution = readmeData => {
-
-}
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {}
 
@@ -134,4 +149,10 @@ function writeToFile(fileName, data) {}
 function init() {}
 
 // Function call to initialize app
-init();
+questions()
+.then(readmeData => {
+    if(readmeData.confirmCredits) {
+        addCredits(readmeData);
+    } 
+})
+
