@@ -47,10 +47,9 @@ const questions = () => {
         },
         {
             type: 'list',
-            name: 'licence',
+            name: 'license',
             message: 'What licence are you using on this project?',
-            choices: ['None', /* Choices go here */],
-            default: 'None',
+            choices: ['GNU AGPLv3', 'GNU GPLv3', 'GNU LGPLv3', 'Mozilla Public 2.0', 'Apache 2.0', 'MIT', 'Boost Software 1.0', 'The Unlicense'],
         },
         {
             type: 'input',
@@ -137,7 +136,7 @@ const addCredits = readmeData => {
         if (credit.confirmAddCredit){
             addCredits(readmeData);
         } else {
-            console.log(readmeData);
+            console.log(generateMarkdown(readmeData));
         }
     })
 };
@@ -145,14 +144,13 @@ const addCredits = readmeData => {
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {}
 
-// TODO: Create a function to initialize app
-function init() {}
-
 // Function call to initialize app
 questions()
 .then(readmeData => {
     if(readmeData.confirmCredits) {
         addCredits(readmeData);
-    } 
-})
+    } else {
+        console.log(generateMarkdown(readmeData));
+    }
+});
 
