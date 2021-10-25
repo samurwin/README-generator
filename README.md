@@ -11,7 +11,7 @@ You will be prompted with several questions about your project, these answers wi
 ## Usage 
 To start using this application, use command: ```node index```
 Below is a walkthrough video:
-![walkthrough](../tutorial/README-Generator-walkthrough.mov)
+[walkthrough](https://drive.google.com/file/d/1AXRL1l437EVkyiuCCKeOYBlG6nmDQ7tO/view?usp=sharing)
 
 ## Credits
 
