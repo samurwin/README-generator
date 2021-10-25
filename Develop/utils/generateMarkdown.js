@@ -14,13 +14,10 @@ function renderBadge(licence) {
 function generateInstallation(installation) {
   const steps = installation.split(', ');
 
-  return `
-    ${steps.map((element, index) => {
-      return `
-      ${index++}. ${element}
-      `
-    })
-  }`
+  return `${steps.map((element, index) => {
+    return `
+    ${index++}. ${element}`
+    })}`
 };
 
 function generateLicense(license) {
@@ -90,7 +87,7 @@ module.exports = markdownData => {
   ${generateCredits(credits)}
 
   ## Questions
-  [My GitHub](https://github.com/${data.github})
+  [My GitHub](https://github.com/${data.github}) | 
   [Email Me](mailto:${data.email})
 `;
 }

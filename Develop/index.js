@@ -136,13 +136,21 @@ const addCredits = readmeData => {
         if (credit.confirmAddCredit){
             addCredits(readmeData);
         } else {
-            console.log(generateMarkdown(readmeData));
+            return generateMarkdown(readmeData);
         }
+    })
+    .then(markdown => {
+        writeToFile(markdown);
     })
 };
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+function writeToFile(data) {
+    fs.writeFile('./dist/README.md', data, err =>{
+        if (err) throw err;
+        console.log('README file complete!');
+    })
+}
 
 // Function call to initialize app
 questions()
